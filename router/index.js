@@ -1,7 +1,8 @@
 const Router = require("express").Router;
-const userController = require("../controllers/user-controller");
 const { body } = require("express-validator");
-const trackController = require("../controllers/track-controller");
+const userController = require("../controllers/user-controller");
+const trendingController = require("../controllers/trending-controller");
+const recommendationController = require("../controllers/recommendation-controller");
 
 const router = new Router();
 
@@ -13,10 +14,14 @@ router.post("/login", userController.login);
 router.post("/logout", userController.logout);
 router.get("/activate/:link", userController.activate);
 router.get("/refresh", userController.refresh);
-router.get("/trending", trackController.trending);
-router.get("/trending/underground", trackController.underground);
-router.get("/trending/weekly", trackController.weeklyTrending);
-router.get("/trending/underground/weekly", trackController.weeklyUnderground);
-router.get("/search", trackController.search);
+router.get("/trending", trendingController.trending);
+router.get("/trending/underground", trendingController.underground);
+router.get("/trending/weekly", trendingController.weeklyTrending);
+router.get("/trending/underground/weekly", trendingController.weeklyUnderground);
+router.get("/recommendation", recommendationController.recommendation);
+router.get("/feeling-lucky", recommendationController.feelingLucky);
+router.get("/most-shared", recommendationController.mostShared);
+router.get("/trending-playlists", recommendationController.trendingPlaylists);
+// router.get("/search", trendingController.search);
 
 module.exports = router; 

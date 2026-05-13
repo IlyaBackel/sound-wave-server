@@ -1,6 +1,6 @@
-const trackService = require("../service/track-service");
+const trendingService = require("../service/trending-service");
 
-class TrackController {
+class TrendingTrackController {
   async trending(req, res, next) {
     try {
       const {
@@ -10,7 +10,7 @@ class TrackController {
         offset = 0,
       } = req.query;
 
-      const tracks = await trackService.getTrendingTracks({
+      const tracks = await trendingService.getTrendingTracks({
         time: timeRange,
         limit: limit,
         offset: offset,
@@ -26,7 +26,7 @@ class TrackController {
   async underground(req, res, next) {
     try {
       const { limit = 9, offset = 0 } = req.query;
-      const tracks = await trackService.getTrendingUndergroudTracks({limit, offset});
+      const tracks = await trendingService.getTrendingUndergroudTracks({limit, offset});
       return res.json(tracks);
     } catch (e) {
       next(e);
@@ -35,7 +35,7 @@ class TrackController {
 
   async weeklyTrending(req, res, next) {
     try {
-      const tracks = await trackService.getTrendingWeeklyTracks();
+      const tracks = await trendingService.getTrendingWeeklyTracks();
       return res.json(tracks);
     } catch (e) {
       next(e);
@@ -44,7 +44,7 @@ class TrackController {
 
   async weeklyUnderground(req, res, next) {
     try {
-      const tracks = await trackService.getTrendingUndergroundWeeklyTracks();
+      const tracks = await trendingService.getTrendingUndergroundWeeklyTracks();
       return res.json(tracks);
     } catch (e) {
       next(e);
@@ -58,7 +58,7 @@ class TrackController {
         limit = 3,
         offset = 0,
       } = req.query;
-      const tracks = await trackService.getSearch({query, limit, offset});
+      const tracks = await trendingService.getSearch({query, limit, offset});
       return res.json(tracks);
     } catch (e) {
       next(e);
@@ -66,4 +66,4 @@ class TrackController {
   }
 }
 
-module.exports = new TrackController();
+module.exports = new TrendingTrackController();

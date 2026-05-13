@@ -1,4 +1,4 @@
-class TrackService {
+class TrendingService {
 
   async getTrendingTracks(params) {
     const urlParams = new URLSearchParams(params).toString();
@@ -44,17 +44,17 @@ class TrackService {
     return data;
   } 
 
-  async getSearch(params){
-    const urlParams = new URLSearchParams(params).toString();
-    const url = `${process.env.AUDIUS_API}/search/autocomplete${urlParams ? `?${urlParams}` : ""}`;
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Error fetching search tracks: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
-  }
+  // async getSearch(params){
+  //   const urlParams = new URLSearchParams(params).toString();
+  //   const url = `${process.env.AUDIUS_API}/search/autocomplete${urlParams ? `?${urlParams}` : ""}`;
+  //   const response = await fetch(url);
+  //   if (!response.ok) {
+  //     throw new Error(`Error fetching search tracks: ${response.status}`);
+  //   }
+  //   const data = await response.json();
+  //   return data;
+  // }
 
 }
 
-module.exports = new TrackService();
+module.exports = new TrendingService();
