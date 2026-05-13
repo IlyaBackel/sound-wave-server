@@ -10,13 +10,21 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  isActivated:{
+  isActivated: {
     type: Boolean,
     default: false,
   },
   activationLink: {
     type: String,
-  }
+  },
+  favorites: {
+    type: [String],
+    default: [],
+  },
+  playlistCounter: {
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = model("User", UserSchema);
