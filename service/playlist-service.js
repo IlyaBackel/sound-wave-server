@@ -6,7 +6,7 @@ class PlaylistService {
   async createPlaylist(userId, { name, description, isPublic }) {
     const user = await User.findById(userId);
     if (!user) {
-      throw ApiError.BadRequest("Пользователь не найден");
+      throw ApiError.BadRequest("User not found");
     }
 
     let finalName = name;
@@ -35,24 +35,24 @@ class PlaylistService {
   async getPlaylistById(playlistId, userId) {
     const playlist = await Playlist.findById(playlistId);
     if (!playlist) {
-      throw ApiError.NotFound("Плейлист не найден");
+      throw ApiError.NotFound("Playlist not found");
     }
     if (playlist.user.toString() !== userId) {
-      throw ApiError.Forbidden("Нет доступа");
+      throw ApiError.Forbidden("No access");
     }
     return playlist;
   }
 
   async addTrackToPlaylist(playlistId, userId, trackId) {
     if (!trackId) {
-      throw ApiError.BadRequest("trackId обязателен");
+      throw ApiError.BadRequest("trackId required");
     }
     const playlist = await Playlist.findById(playlistId);
     if (!playlist) {
-      throw ApiError.NotFound("Плейлист не найден");
+      throw ApiError.NotFound("Playlist not found");
     }
     if (playlist.user.toString() !== userId) {
-      throw ApiError.Forbidden("Нет доступа");
+      throw ApiError.Forbidden("No access");
     }
     if (!playlist.tracks.includes(trackId)) {
       playlist.tracks.push(trackId);
@@ -64,10 +64,10 @@ class PlaylistService {
   async removeTrackFromPlaylist(playlistId, userId, trackId) {
     const playlist = await Playlist.findById(playlistId);
     if (!playlist) {
-      throw ApiError.NotFound("Плейлист не найден");
+      throw ApiError.NotFound("Playlist not found");
     }
     if (playlist.user.toString() !== userId) {
-      throw ApiError.Forbidden("Нет доступа");
+      throw ApiError.Forbidden("No access");
     }
     playlist.tracks = playlist.tracks.filter(id => id !== trackId);
     await playlist.save();
@@ -77,13 +77,13 @@ class PlaylistService {
   async deletePlaylist(playlistId, userId) {
     const playlist = await Playlist.findById(playlistId);
     if (!playlist) {
-      throw ApiError.NotFound("Плейлист не найден");
+      throw ApiError.NotFound("Playlist not found");
     }
     if (playlist.user.toString() !== userId) {
-      throw ApiError.Forbidden("Нет доступа");
+      throw ApiError.Forbidden("No access");
     }
     await Playlist.deleteOne({ _id: playlistId });
-    return { message: "Плейлист удалён" };
+    return { message: "Playlist deleted" };
   }
 
   async getUserPublicPlaylists(userId) {
